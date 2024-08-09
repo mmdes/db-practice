@@ -1,5 +1,5 @@
 
--- criando a tabela usuarios
+-- Criação tabela usuarios
 CREATE TABLE usuarios(
     id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
     nome VARCHAR(150) NOT NULL,
@@ -10,6 +10,7 @@ CREATE TABLE usuarios(
     salario DECIMAL(15, 2),
     hash_senha VARCHAR(255) NOT NULL UNIQUE key
 )
+
 
 -- criação da tabela papeis
 CREATE TABLE papeis(
