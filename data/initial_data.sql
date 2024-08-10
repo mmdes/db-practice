@@ -104,4 +104,81 @@ VALUES ("Tanner", "Mayo", "vitae.diam@consectetueripsum.ca", "QLN12HIN3RL", "202
        ("Hilda", "Valentine", "mollis.Duis@aaliquetvel.co.uk", "SOA17EEA6KX", "2021-03-30 01:48:13");
 
 
--- Gerando salários para a coluna salários da tabela usuarios 
+
+-- Populando tabela usuarios
+INSERT INTO perfis (bio, descricao, id_usuario)
+SELECT 
+    concat('Bio de ', u.nome), 
+    concat('Descrição de ', u.nome), 
+    u.id 
+FROM usuarios u 
+
+
+-- Populando coluna salarios da tabela usuarios com geração de salários aleatórios
+UPDATE usuarios 
+SET salario = round(rand() * 10000, 2) 
+
+
+-- Populando a tabela papeis 
+INSERT INTO papeis (nome)
+VALUES
+	('ADMIN'),
+	('POST'),
+	('GET'),
+	('PUT'),
+	('DELETE')
+	
+
+-- Populando a tabela de relacionamento usuarios_papeis
+INSERT INTO usuarios_papeis (id_usuario, id_papel)
+SELECT 
+    u.id AS uid, 
+    (
+        SELECT p.id 
+        FROM papeis p
+        ORDER BY RAND()
+        LIMIT 1
+    ) AS pid
+FROM usuarios u;
+
+
+-- Adicionando mais papeis aos usuários para uma base mais diversa,
+-- ignorando os erros de chave duplicada 
+INSERT IGNORE INTO usuarios_papeis (id_usuario, id_papel)
+SELECT 
+    u.id AS uid, 
+    (
+        SELECT p.id 
+        FROM papeis p
+        ORDER BY RAND()
+        LIMIT 1
+    ) AS pid
+FROM usuarios u
+ORDER BY RAND()
+LIMIT 50;
+
+INSERT IGNORE INTO usuarios_papeis (id_usuario, id_papel)
+SELECT 
+    u.id AS uid, 
+    (
+        SELECT p.id 
+        FROM papeis p
+        ORDER BY RAND()
+        LIMIT 1
+    ) AS pid
+FROM usuarios u
+ORDER BY RAND()
+LIMIT 20;
+
+INSERT IGNORE INTO usuarios_papeis (id_usuario, id_papel)
+SELECT 
+    u.id AS uid, 
+    (
+        SELECT p.id 
+        FROM papeis p
+        ORDER BY RAND()
+        LIMIT 1
+    ) AS pid
+FROM usuarios u
+ORDER BY RAND()
+LIMIT 5;
